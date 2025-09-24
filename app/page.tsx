@@ -40,7 +40,7 @@ export default function Home() {
           </h1>
 
           {/* Golden Frame */}
-          <div className="w-full max-w-[30%] mx-auto mb-12">
+          <div className="w-full max-w-xs md:max-w-md lg:max-w-lg mx-auto mb-12">
             <div className="relative group">
               {/* Glow Effect */}
               <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition duration-1000"></div>
