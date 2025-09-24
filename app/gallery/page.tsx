@@ -10,59 +10,59 @@ export default function GalleryPage() {
   const galleryItems = [
     {
       id: 1,
-      title: "한강 카약 대회 시작",
-      description: "2024 춘계 대회 출발 장면",
-      date: "2024-03-20",
-      competition: "춘계 카약 대회",
+      title: "장성호 멸망전",
+      description: "2025 장성호 멸망전",
+      date: "2025-09-28",
+      competition: "장성호",
     },
     {
       id: 2,
-      title: "팀 릴레이 경기",
-      description: "치열한 팀 경기 현장",
-      date: "2024-03-20",
-      competition: "춘계 카약 대회",
+      title: "장성호 멸망전",
+      description: "2025 장성호 멸망전",
+      date: "2025-09-28",
+      competition: "장성호",
     },
     {
       id: 3,
-      title: "우승자 시상식",
-      description: "영광의 순간",
-      date: "2024-03-20",
-      competition: "춘계 카약 대회",
+      title: "장성호 멸망전",
+      description: "2025 장성호 멸망전",
+      date: "2025-09-28",
+      competition: "장성호",
     },
     {
       id: 4,
-      title: "프리스타일 시범",
-      description: "멋진 기술 시연",
-      date: "2024-03-15",
-      competition: "한강 대회",
+      title: "장성호 멸망전",
+      description: "2025 장성호 멸망전",
+      date: "2025-09-28",
+      competition: "장성호",
     },
     {
       id: 5,
-      title: "일몰 카약",
-      description: "아름다운 일몰과 함께",
-      date: "2024-03-10",
-      competition: "한강 대회",
+      title: "장성호 멸망전",
+      description: "2025 장성호 멸망전",
+      date: "2025-09-28",
+      competition: "장성호",
     },
     {
       id: 6,
-      title: "단체 출발",
-      description: "모든 선수들의 출발",
-      date: "2024-03-05",
-      competition: "동계 대회",
+      title: "장성호 멸망전",
+      description: "2025 장성호 멸망전",
+      date: "2025-09-28",
+      competition: "장성호",
     },
     {
       id: 7,
-      title: "결승선 통과",
-      description: "마지막 스퍼트",
-      date: "2024-03-05",
-      competition: "동계 대회",
+      title: "장성호 멸망전",
+      description: "2025 장성호 멸망전",
+      date: "2025-09-28",
+      competition: "장성호",
     },
     {
       id: 8,
-      title: "연습 세션",
-      description: "대회 전 연습",
-      date: "2024-02-28",
-      competition: "연습",
+      title: "장성호 멸망전",
+      description: "2025 장성호 멸망전",
+      date: "2025-09-28",
+      competition: "장성호",
     },
   ];
 
@@ -86,11 +86,10 @@ export default function GalleryPage() {
             <button
               key={competition}
               onClick={() => setSelectedCategory(competition)}
-              className={`px-4 py-2 rounded-full border transition-colors whitespace-nowrap ${
-                selectedCategory === competition
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "hover:bg-blue-50 hover:border-blue-600 hover:text-blue-600"
-              }`}
+              className={`px-4 py-2 rounded-full border transition-colors whitespace-nowrap ${selectedCategory === competition
+                ? "bg-blue-600 text-white border-blue-600"
+                : "hover:bg-blue-50 hover:border-blue-600 hover:text-blue-600"
+                }`}
             >
               {competition}
             </button>

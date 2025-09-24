@@ -1,7 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const galleryImages = ["한강 카약", "팀 경기", "시상식", "출발 장면", "연습 세션", "단체 출발", "결승선 통과", "우승 순간"];
+
   return (
     <div>
       {/* Hall of Fame - Full Page Hero */}
@@ -140,8 +146,12 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {["한강 카약", "팀 경기", "시상식", "출발 장면", "연습 세션", "단체 출발", "결승선 통과", "우승 순간"].map((item, i) => (
-              <div key={i} className="aspect-square bg-gray-100 rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer shadow-md hover:shadow-xl relative">
+            {galleryImages.map((item, i) => (
+              <div
+                key={i}
+                onClick={() => setSelectedImage(i)}
+                className="aspect-square bg-gray-100 rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer shadow-md hover:shadow-xl relative"
+              >
                 <Image
                   src="/winner.jpeg"
                   alt={item}
@@ -153,6 +163,34 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      {selectedImage !== null && (
+        <div
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-6xl w-full">
+            <button
+              className="absolute -top-12 right-0 text-white text-4xl hover:text-gray-300 transition-colors"
+              onClick={() => setSelectedImage(null)}
+            >
+              ✕
+            </button>
+            <div className="relative aspect-video rounded-lg overflow-hidden bg-black">
+              <Image
+                src="/winner.jpeg"
+                alt={galleryImages[selectedImage]}
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p className="text-white text-center mt-4 text-xl font-semibold">
+              {galleryImages[selectedImage]}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
