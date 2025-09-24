@@ -5,6 +5,7 @@ import Image from "next/image";
 
 export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("전체");
 
   const galleryItems = [
     {
@@ -70,6 +71,10 @@ export default function GalleryPage() {
     ...Array.from(new Set(galleryItems.map((item) => item.competition))),
   ];
 
+  const filteredItems = selectedCategory === "전체"
+    ? galleryItems
+    : galleryItems.filter((item) => item.competition === selectedCategory);
+
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-7xl mx-auto">
@@ -80,7 +85,12 @@ export default function GalleryPage() {
           {competitions.map((competition) => (
             <button
               key={competition}
-              className="px-4 py-2 rounded-full border hover:bg-blue-50 hover:border-blue-600 hover:text-blue-600 transition-colors whitespace-nowrap"
+              onClick={() => setSelectedCategory(competition)}
+              className={`px-4 py-2 rounded-full border transition-colors whitespace-nowrap ${
+                selectedCategory === competition
+                  ? "bg-blue-600 text-white border-blue-600"
+                  : "hover:bg-blue-50 hover:border-blue-600 hover:text-blue-600"
+              }`}
             >
               {competition}
             </button>
@@ -89,7 +99,7 @@ export default function GalleryPage() {
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {galleryItems.map((item) => (
+          {filteredItems.map((item) => (
             <div
               key={item.id}
               onClick={() => setSelectedImage(item.id)}
