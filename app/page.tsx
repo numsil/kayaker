@@ -185,9 +185,6 @@ export default function Home() {
                 className="object-contain"
               />
             </div>
-            <p className="text-white text-center mt-4 text-xl font-semibold">
-              {galleryImages[selectedImage]}
-            </p>
           </div>
         </div>
       )}
