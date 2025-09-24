@@ -15,10 +15,10 @@ export default function CompetitionsPage() {
   ];
 
   const upcomingCompetitions = competitions.filter(
-    (c) => c.status === "upcoming"
+    (c) => c.status === "upcoming" as string
   );
   const completedCompetitions = competitions.filter(
-    (c) => c.status === "completed"
+    (c) => c.status === "completed" as string
   );
 
   return (
