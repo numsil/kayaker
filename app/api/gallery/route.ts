@@ -47,14 +47,28 @@ async function readGalleryData() {
 // Blob Storage에 데이터 쓰기
 async function writeGalleryData(data: any[]) {
   try {
+    console.log('Writing gallery data:', data.length, 'items');
+
+    if (!Array.isArray(data)) {
+      console.error('Data is not an array:', typeof data);
+      return false;
+    }
+
     const jsonData = JSON.stringify(data, null, 2);
+    console.log('JSON data size:', jsonData.length, 'characters');
+
     const blob = await put(GALLERY_DATA_KEY, jsonData, {
       access: 'public',
       contentType: 'application/json'
     });
+
+    console.log('Blob written successfully:', blob.url);
     return true;
   } catch (error) {
     console.error('Error writing gallery data:', error);
+    if (error instanceof Error) {
+      console.error('Error details:', error.message, error.stack);
+    }
     return false;
   }
 }
@@ -96,18 +110,40 @@ export async function POST(request: NextRequest) {
 // DELETE: 갤러리 아이템 삭제
 export async function DELETE(request: NextRequest) {
   try {
-    const { id } = await request.json();
+    console.log('DELETE request received');
+
+    const body = await request.json();
+    console.log('Request body:', body);
+
+    const { id } = body;
+
+    if (!id) {
+      console.error('No ID provided in delete request');
+      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    }
+
+    console.log('Deleting item with ID:', id);
+
     const currentData = await readGalleryData();
+    console.log('Current data loaded:', currentData.length, 'items');
 
     const updatedData = currentData.filter((item: any) => item.id !== id);
+    console.log('Filtered data:', updatedData.length, 'items remaining');
+
     const success = await writeGalleryData(updatedData);
+    console.log('Write operation success:', success);
 
     if (success) {
       return NextResponse.json({ success: true });
     } else {
-      return NextResponse.json({ error: 'Failed to delete item' }, { status: 500 });
+      console.error('Failed to write updated data');
+      return NextResponse.json({ error: 'Failed to save updated data' }, { status: 500 });
     }
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete item' }, { status: 500 });
+    console.error('Error in DELETE operation:', error);
+    return NextResponse.json({
+      error: 'Failed to delete item',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
   }
 }
