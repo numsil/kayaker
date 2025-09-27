@@ -2,11 +2,43 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+interface GalleryItem {
+  id: number;
+  title: string;
+  description: string;
+  date: string;
+  competition: string;
+  imageUrl: string;
+}
 
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const galleryImages = ["한강 카약", "팀 경기", "시상식", "출발 장면", "연습 세션", "단체 출발", "결승선 통과", "우승 순간"];
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // 갤러리 데이터 로드
+  useEffect(() => {
+    const loadGalleryData = async () => {
+      try {
+        const response = await fetch('/api/gallery');
+        if (response.ok) {
+          const data = await response.json();
+          setGalleryItems(data);
+        }
+      } catch (error) {
+        console.error('Error loading gallery data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadGalleryData();
+  }, []);
+
+  // 최신 8개만 표시
+  const displayItems = galleryItems.slice(0, 8);
 
   return (
     <div>
@@ -145,22 +177,37 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {galleryImages.map((item, i) => (
-              <div
-                key={i}
-                onClick={() => setSelectedImage(i)}
-                className="aspect-square bg-gray-100 rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer shadow-md hover:shadow-xl relative"
-              >
-                <Image
-                  src="/winner.jpeg"
-                  alt={item}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500">로딩 중...</p>
+            </div>
+          ) : displayItems.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500">등록된 사진이 없습니다.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {displayItems.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => setSelectedImage(item.id)}
+                  className="aspect-square bg-gray-100 rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer shadow-md hover:shadow-xl relative group"
+                >
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                    <h3 className="font-semibold text-sm">{item.title}</h3>
+                    <p className="text-xs text-gray-200">{item.competition}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -179,11 +226,28 @@ export default function Home() {
             </button>
             <div className="relative aspect-video rounded-lg overflow-hidden bg-black">
               <Image
-                src="/winner.jpeg"
-                alt={galleryImages[selectedImage]}
+                src={galleryItems.find((item) => item.id === selectedImage)?.imageUrl || "/winner.jpeg"}
+                alt={galleryItems.find((item) => item.id === selectedImage)?.title || ""}
                 fill
                 className="object-contain"
               />
+            </div>
+            <div className="mt-4 text-white text-center">
+              <h2 className="text-2xl font-bold">
+                {galleryItems.find((item) => item.id === selectedImage)?.title}
+              </h2>
+              <p className="text-gray-300 mt-2">
+                {galleryItems.find((item) => item.id === selectedImage)?.description}
+              </p>
+              <div className="flex gap-4 mt-2 text-sm text-gray-400 justify-center">
+                <span>
+                  {galleryItems.find((item) => item.id === selectedImage)?.date}
+                </span>
+                <span>•</span>
+                <span>
+                  {galleryItems.find((item) => item.id === selectedImage)?.competition}
+                </span>
+              </div>
             </div>
           </div>
         </div>

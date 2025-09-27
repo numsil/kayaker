@@ -144,6 +144,9 @@ export default function AdminPage() {
         if (response.ok) {
           const result = await response.json();
           setNewItem(prev => ({ ...prev, actualImageUrl: result.url }));
+        } else {
+          const errorData = await response.json();
+          alert(`이미지 업로드 실패: ${errorData.error}`);
         }
       } catch (error) {
         console.error('Upload error:', error);
