@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "장성호 멸망전",
+    "description": "2025 장성호 멸망전",
+    "date": "2025-09-28",
+    "competition": "장성호",
+    "imageUrl": "/winner.jpeg"
+  },
+  {
+    "title": "우승 사진 테스트",
+    "description": "실제 JPEG 파일로 업로드 테스트",
+    "date": "2025-09-28",
+    "competition": "테스트 대회",
+    "imageUrl": "/photo_1758987918168.jpeg",
+    "id": 1758987955263
+  },
+  {
+    "title": "장성호",
+    "description": "장성호",
+    "date": "2025-09-27",
+    "competition": "장성호",
+    "imageUrl": "/photo_1758988495015.jpeg",
+    "id": 1758988520180
+  }
+]

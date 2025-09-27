@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
-import path from 'path';
+import { put } from '@vercel/blob';
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,22 +22,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File too large. Maximum size is 5MB.' }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
     // Generate unique filename
     const timestamp = Date.now();
-    const extension = path.extname(file.name);
-    const filename = `photo_${timestamp}${extension}`;
+    const extension = file.name.split('.').pop() || 'jpg';
+    const filename = `photo_${timestamp}.${extension}`;
 
-    const filePath = path.join(process.cwd(), 'public', filename);
-
-    await writeFile(filePath, buffer);
+    // Upload to Vercel Blob Storage
+    const blob = await put(filename, file, {
+      access: 'public',
+    });
 
     return NextResponse.json({
       success: true,
       filename,
-      url: `/${filename}`
+      url: blob.url
     });
 
   } catch (error) {
