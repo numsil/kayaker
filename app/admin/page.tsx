@@ -18,55 +18,137 @@ export default function AdminPage() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [showForm, setShowForm] = useState(false);
 
+  // 갤러리 데이터 로드
+  const loadGalleryData = async () => {
+    try {
+      const response = await fetch('/api/gallery');
+      if (response.ok) {
+        const data = await response.json();
+        setGalleryItems(data);
+      }
+    } catch (error) {
+      console.error('Error loading gallery data:', error);
+    }
+  };
+
+  // 로그인 성공 시 데이터 로드
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+    loadGalleryData();
+  };
+
   const [newItem, setNewItem] = useState({
     title: "",
     description: "",
     date: "",
     competition: "",
     imageUrl: "",
+    actualImageUrl: "",
   });
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === "kayaker2025") {
-      setIsAuthenticated(true);
+      handleLoginSuccess();
     } else {
       alert("비밀번호가 틀렸습니다.");
     }
   };
 
-  const handleAddItem = (e: React.FormEvent) => {
+  const handleAddItem = async (e: React.FormEvent) => {
     e.preventDefault();
-    const item: GalleryItem = {
-      id: Date.now(),
-      ...newItem,
-    };
-    setGalleryItems([...galleryItems, item]);
-    setNewItem({
-      title: "",
-      description: "",
-      date: "",
-      competition: "",
-      imageUrl: "",
-    });
-    setShowForm(false);
-    alert("사진이 추가되었습니다!");
-  };
 
-  const handleDelete = (id: number) => {
-    if (confirm("정말 삭제하시겠습니까?")) {
-      setGalleryItems(galleryItems.filter((item) => item.id !== id));
+    const itemData = {
+      title: newItem.title,
+      description: newItem.description,
+      date: newItem.date,
+      competition: newItem.competition,
+      imageUrl: newItem.actualImageUrl || newItem.imageUrl,
+    };
+
+    try {
+      const response = await fetch('/api/gallery', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(itemData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setGalleryItems([...galleryItems, result.item]);
+        setNewItem({
+          title: "",
+          description: "",
+          date: "",
+          competition: "",
+          imageUrl: "",
+          actualImageUrl: "",
+        });
+        setShowForm(false);
+        alert("사진이 추가되었습니다!");
+      } else {
+        alert("사진 추가 실패");
+      }
+    } catch (error) {
+      console.error('Error adding item:', error);
+      alert("사진 추가 중 오류가 발생했습니다.");
     }
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDelete = async (id: number) => {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      try {
+        const response = await fetch('/api/gallery', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id }),
+        });
+
+        if (response.ok) {
+          setGalleryItems(galleryItems.filter((item) => item.id !== id));
+          alert("삭제되었습니다.");
+        } else {
+          alert("삭제 실패");
+        }
+      } catch (error) {
+        console.error('Error deleting item:', error);
+        alert("삭제 중 오류가 발생했습니다.");
+      }
+    }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // 미리보기를 위한 FileReader
       const reader = new FileReader();
       reader.onloadend = () => {
         setNewItem({ ...newItem, imageUrl: reader.result as string });
       };
       reader.readAsDataURL(file);
+
+      // 실제 파일 업로드
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          setNewItem(prev => ({ ...prev, actualImageUrl: result.url }));
+        }
+      } catch (error) {
+        console.error('Upload error:', error);
+        alert('이미지 업로드 실패');
+      }
     }
   };
 
