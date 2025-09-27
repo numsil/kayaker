@@ -22,17 +22,21 @@ async function readGalleryData() {
     const blobs = await list({ prefix: GALLERY_DATA_KEY });
 
     if (blobs.blobs.length > 0) {
-      // 가장 최신 파일 가져오기
-      const latestBlob = blobs.blobs[0];
-      const response = await fetch(latestBlob.url);
+      // 정확한 파일명으로 찾기
+      const dataBlob = blobs.blobs.find(blob => blob.pathname === GALLERY_DATA_KEY);
 
-      if (response.ok) {
-        const data = await response.json();
-        return data;
+      if (dataBlob) {
+        const response = await fetch(dataBlob.url);
+        if (response.ok) {
+          const text = await response.text();
+          const data = JSON.parse(text);
+          return Array.isArray(data) ? data : defaultGalleryData;
+        }
       }
     }
 
-    // 파일이 없으면 기본 데이터 반환
+    // 파일이 없으면 기본 데이터 반환하고 새로 생성
+    await writeGalleryData(defaultGalleryData);
     return defaultGalleryData;
   } catch (error) {
     console.error('Error reading gallery data:', error);
