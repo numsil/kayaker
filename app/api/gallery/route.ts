@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { put, list } from '@vercel/blob';
+import { put, list, del } from '@vercel/blob';
 
-const GALLERY_DATA_KEY = 'gallery-data.json';
+const GALLERY_DATA_PREFIX = 'gallery-data';
 
 // 기본 갤러리 데이터
 const defaultGalleryData = [
@@ -18,15 +18,17 @@ const defaultGalleryData = [
 // Blob Storage에서 데이터 읽기
 async function readGalleryData() {
   try {
-    // Blob Storage에서 데이터 파일 목록 확인
-    const blobs = await list({ prefix: GALLERY_DATA_KEY });
+    // Blob Storage에서 갤러리 데이터 파일 목록 확인
+    const blobs = await list({ prefix: GALLERY_DATA_PREFIX });
 
     if (blobs.blobs.length > 0) {
-      // 정확한 파일명으로 찾기
-      const dataBlob = blobs.blobs.find(blob => blob.pathname === GALLERY_DATA_KEY);
+      // 가장 최신 파일 찾기 (uploadedAt으로 정렬)
+      const latestBlob = blobs.blobs
+        .filter(blob => blob.pathname.startsWith(GALLERY_DATA_PREFIX))
+        .sort((a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime())[0];
 
-      if (dataBlob) {
-        const response = await fetch(dataBlob.url);
+      if (latestBlob) {
+        const response = await fetch(latestBlob.url);
         if (response.ok) {
           const text = await response.text();
           const data = JSON.parse(text);
@@ -54,13 +56,35 @@ async function writeGalleryData(data: any[]) {
       return false;
     }
 
+    // 기존 갤러리 데이터 파일들 정리 (최신 3개만 유지)
+    try {
+      const existingBlobs = await list({ prefix: GALLERY_DATA_PREFIX });
+      const galleryFiles = existingBlobs.blobs
+        .filter(blob => blob.pathname.startsWith(GALLERY_DATA_PREFIX))
+        .sort((a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime());
+
+      // 오래된 파일들 삭제 (최신 2개는 유지)
+      if (galleryFiles.length > 2) {
+        const filesToDelete = galleryFiles.slice(2);
+        for (const file of filesToDelete) {
+          await del(file.url);
+          console.log('Deleted old gallery file:', file.pathname);
+        }
+      }
+    } catch (cleanupError) {
+      console.log('Cleanup warning (non-critical):', cleanupError);
+    }
+
     const jsonData = JSON.stringify(data, null, 2);
     console.log('JSON data size:', jsonData.length, 'characters');
 
-    const blob = await put(GALLERY_DATA_KEY, jsonData, {
+    // 타임스탬프를 포함한 고유한 파일명 생성
+    const timestamp = Date.now();
+    const filename = `${GALLERY_DATA_PREFIX}-${timestamp}.json`;
+
+    const blob = await put(filename, jsonData, {
       access: 'public',
-      contentType: 'application/json',
-      allowOverwrite: true
+      contentType: 'application/json'
     });
 
     console.log('Blob written successfully:', blob.url);
