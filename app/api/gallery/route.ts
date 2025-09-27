@@ -59,7 +59,8 @@ async function writeGalleryData(data: any[]) {
 
     const blob = await put(GALLERY_DATA_KEY, jsonData, {
       access: 'public',
-      contentType: 'application/json'
+      contentType: 'application/json',
+      allowOverwrite: true
     });
 
     console.log('Blob written successfully:', blob.url);
