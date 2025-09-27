@@ -121,21 +121,61 @@ export default function AdminPage() {
     }
   };
 
+  // 이미지 압축 함수
+  const compressImage = (file: File, maxWidth: number = 800, quality: number = 0.7): Promise<File> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d')!;
+      const img = new Image();
+
+      img.onload = () => {
+        // 비율 유지하면서 크기 조정
+        let { width, height } = img;
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        // 이미지 그리기
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Blob으로 변환
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const compressedFile = new File([blob], file.name, {
+              type: 'image/jpeg',
+              lastModified: Date.now(),
+            });
+            resolve(compressedFile);
+          }
+        }, 'image/jpeg', quality);
+      };
+
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // 미리보기를 위한 FileReader
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setNewItem({ ...newItem, imageUrl: reader.result as string });
-      };
-      reader.readAsDataURL(file);
-
-      // 실제 파일 업로드
-      const formData = new FormData();
-      formData.append('file', file);
-
       try {
+        // 이미지 압축 (800px 폭, 70% 품질)
+        const compressedFile = await compressImage(file, 800, 0.7);
+
+        // 미리보기를 위한 FileReader
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setNewItem({ ...newItem, imageUrl: reader.result as string });
+        };
+        reader.readAsDataURL(compressedFile);
+
+        // 실제 파일 업로드 (압축된 파일 사용)
+        const formData = new FormData();
+        formData.append('file', compressedFile);
+
         const response = await fetch('/api/upload', {
           method: 'POST',
           body: formData,
@@ -226,6 +266,9 @@ export default function AdminPage() {
                   className="w-full px-4 py-2 border rounded-lg"
                   required
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  최대 1MB, 자동으로 800px 폭으로 압축됩니다.
+                </p>
                 {newItem.imageUrl && (
                   <div className="mt-4 relative w-40 h-40">
                     <Image

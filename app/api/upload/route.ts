@@ -16,10 +16,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid file type. Only images are allowed.' }, { status: 400 });
     }
 
-    // 파일 크기 제한 (5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    // 파일 크기 제한 (1MB) - Vercel 제한에 맞춤
+    const maxSize = 1 * 1024 * 1024; // 1MB
     if (file.size > maxSize) {
-      return NextResponse.json({ error: 'File too large. Maximum size is 5MB.' }, { status: 400 });
+      return NextResponse.json({ error: 'File too large. Maximum size is 1MB. Please compress your image.' }, { status: 400 });
     }
 
     // Generate unique filename
