@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFile, writeFile } from 'fs/promises';
-import path from 'path';
+import { put, list } from '@vercel/blob';
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'gallery.json');
+const GALLERY_DATA_KEY = 'gallery-data.json';
 
 // 기본 갤러리 데이터
 const defaultGalleryData = [
@@ -16,25 +15,39 @@ const defaultGalleryData = [
   }
 ];
 
-// 데이터 파일 읽기
+// Blob Storage에서 데이터 읽기
 async function readGalleryData() {
   try {
-    const data = await readFile(DATA_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch (error) {
+    // Blob Storage에서 데이터 파일 목록 확인
+    const blobs = await list({ prefix: GALLERY_DATA_KEY });
+
+    if (blobs.blobs.length > 0) {
+      // 가장 최신 파일 가져오기
+      const latestBlob = blobs.blobs[0];
+      const response = await fetch(latestBlob.url);
+
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      }
+    }
+
     // 파일이 없으면 기본 데이터 반환
+    return defaultGalleryData;
+  } catch (error) {
+    console.error('Error reading gallery data:', error);
     return defaultGalleryData;
   }
 }
 
-// 데이터 파일 쓰기
+// Blob Storage에 데이터 쓰기
 async function writeGalleryData(data: any[]) {
   try {
-    // data 디렉토리 생성
-    const dataDir = path.dirname(DATA_FILE);
-    await writeFile(dataDir + '/.gitkeep', '');
-
-    await writeFile(DATA_FILE, JSON.stringify(data, null, 2));
+    const jsonData = JSON.stringify(data, null, 2);
+    const blob = await put(GALLERY_DATA_KEY, jsonData, {
+      access: 'public',
+      contentType: 'application/json'
+    });
     return true;
   } catch (error) {
     console.error('Error writing gallery data:', error);
