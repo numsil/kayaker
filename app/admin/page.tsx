@@ -125,7 +125,11 @@ export default function AdminPage() {
   const compressImage = (file: File, maxWidth: number = 800, quality: number = 0.7): Promise<File> => {
     return new Promise((resolve) => {
       const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d')!;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        resolve(file);
+        return;
+      }
       const img = new Image();
 
       img.onload = () => {
