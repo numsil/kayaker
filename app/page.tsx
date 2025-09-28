@@ -145,10 +145,220 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Ranking Section */}
+      <section className="py-32 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">장성호 멸망전 순위</h2>
+            <p className="text-xl text-gray-600">장성호 대회 결과 - 최대 배스 사이즈</p>
+          </div>
+
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+            {/* 1st Place - Special Design */}
+            <div className="bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 p-8">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-6">
+                  <div className="relative">
+                    {/* Crown Icon */}
+                    <svg className="w-16 h-16 text-white drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2L15 8L21 9L16.5 13.5L18 20L12 16L6 20L7.5 13.5L3 9L9 8L12 2Z" />
+                    </svg>
+                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                      <span className="text-yellow-600 font-bold text-sm">1</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold text-white">입질가즘 | 송인호</h3>
+                    <p className="text-yellow-100 text-lg">장성호 챔피언</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-4xl font-bold text-white">56cm</div>
+                  <p className="text-yellow-100">최대 배스</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Other Rankings */}
+            <div className="divide-y divide-gray-100">
+              {/* 2nd Place */}
+              <div className="p-6 hover:bg-gray-50 transition-colors">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-6">
+                    <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                      <span className="text-2xl font-bold text-gray-600">2</span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900">빌런</h3>
+                      <p className="text-gray-500">박상준</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-gray-700">55cm</div>
+                    <p className="text-gray-500 text-sm">최대 배스</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3rd Place */}
+              <div className="p-6 hover:bg-gray-50 transition-colors">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-6">
+                    <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                      <span className="text-2xl font-bold text-amber-600">3</span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900">잉꼬부부</h3>
+                      <p className="text-gray-500">이영재</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-gray-700">51cm</div>
+                    <p className="text-gray-500 text-sm">최대 배스</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* 4th-16th Places */}
+              {[
+                { rank: 4, name: "쌔팀장", size: "50cm", nickname: "장이수팀장" },
+                { rank: 5, name: "염의철", size: "48cm", nickname: "런커" },
+                { rank: 6, name: "강구현", size: "46cm", nickname: "도르도" },
+                { rank: 6, name: "윤명식", size: "46cm", nickname: "다슬기" },
+                { rank: 6, name: "김성준", size: "46cm", nickname: "금광지" },
+                { rank: 9, name: "김민호", size: "43cm", nickname: "병아리" },
+                { rank: 10, name: "이상규", size: "42cm", nickname: "삼지창" },
+                { rank: 11, name: "감동하", size: "38cm", nickname: "나무" },
+                { rank: 12, name: "임홍섭", size: "33.5cm", nickname: "괴짜" },
+                { rank: 13, name: "오문호", size: "32cm", nickname: "앗싸리오" },
+                { rank: 14, name: "오태경", size: "30cm", nickname: "바르칸" },
+                { rank: 15, name: "오경석", size: "26.5cm", nickname: "노싱커" },
+                { rank: 16, name: "이석원", size: "26cm", nickname: "까망" }
+              ].map((player) => (
+                <div key={player.rank} className="p-6 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-6">
+                      <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                        <span className="text-lg font-semibold text-gray-600">{player.rank}</span>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-medium text-gray-900">{player.nickname}</h3>
+                        <p className="text-gray-500 text-sm">{player.name}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-xl font-semibold text-gray-700">{player.size}</div>
+                      <p className="text-gray-500 text-sm">최대 배스</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* Divider Line */}
+              <div className="border-t-4 border-black bg-gray-900 h-2"></div>
+
+              {/* Special Section - 부참가자들 */}
+              <div className="bg-gradient-to-br from-red-50 to-orange-50">
+                <div className="text-center py-4 bg-gradient-to-r from-red-500 to-orange-500">
+                  <h3 className="text-xl font-bold text-white">🔥 꼴찌 특별석 🔥</h3>
+                  <p className="text-red-100 text-sm"></p>
+                </div>
+
+                {/* Special Bottom 3 */}
+                <div className="divide-y divide-red-200">
+                  {/* 무사 */}
+                  <div className="p-6 hover:bg-red-50 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-6">
+                        <div className="w-12 h-12 bg-red-200 rounded-full flex items-center justify-center border-2 border-red-400">
+                          <span className="text-lg font-bold text-red-700">💥</span>
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-medium text-gray-900">무사</h3>
+                          <p className="text-gray-500 text-sm">김경호</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xl font-semibold text-red-600">꽝!!</div>
+                        <p className="text-red-400 text-xs">가위바위보 달인</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 흑염가 - 진짜 꼴찌 Special */}
+                  <div className="p-8 bg-gradient-to-r from-red-100 via-red-200 to-orange-200 border-4 border-red-500 shadow-2xl">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-8">
+                        <div className="relative">
+                          <div className="w-20 h-20 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center border-4 border-red-900 shadow-2xl">
+                            <span className="text-2xl font-bold text-white">꼴찌</span>
+                          </div>
+                          <div className="absolute -top-3 -right-3 text-3xl animate-bounce">🔥</div>
+                          <div className="absolute -bottom-3 -left-3 text-2xl animate-pulse">💥</div>
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold text-red-900">흑염가</h3>
+                          <p className="text-red-700 font-bold text-lg">김광배</p>
+                          <p className="text-red-600 text-sm font-bold">🏆 진정한 장성호 꼴찌 왕</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-4xl font-bold text-red-800">꽝!!</div>
+                        <p className="text-red-400 text-xs">레전드 오브 레전드</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 꽝종 - 포기자 회색 디자인 */}
+                  <div className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 border-2 border-gray-400">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-6">
+                        <div className="relative">
+                          <div className="w-14 h-14 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center border-3 border-gray-700 shadow-lg">
+                            <span className="text-lg font-bold text-white">지각</span>
+                          </div>
+                          <div className="absolute -top-2 -right-2 text-xl">😴</div>
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-700">꽝종</h3>
+                          <p className="text-gray-600 font-medium">권중성</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-2xl font-bold text-gray-600">미참여</div>
+                        <p className="text-gray-500 text-sm font-semibold">게임 미참여</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Stats */}
+            <div className="bg-gray-50 p-6">
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-blue-600">16명</div>
+                  <p className="text-gray-500 text-sm">참가자</p>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-green-600">56cm</div>
+                  <p className="text-gray-500 text-sm">최대 사이즈</p>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-purple-600">40.5cm</div>
+                  <p className="text-gray-500 text-sm">평균 사이즈</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Competition Section */}
       <section className="py-32 bg-white">
         <div className="max-w-5xl mx-auto px-6 text-center">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">다가오는 대회</h2>
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">카약커 초대 대회</h2>
 
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-12 md:p-16 shadow-xl">
             <div className="space-y-3 mb-10">
