@@ -319,7 +319,7 @@ export default function Home() {
                           <div className="absolute -bottom-3 -left-3 text-2xl animate-pulse">💥</div>
                         </div>
                         <div>
-                          <h3 className="text-2xl font-bold text-red-900">흑염가</h3>
+                          <h3 className="text-2xl font-bold text-red-900">흑열가</h3>
                           <p className="text-red-700 font-bold text-lg">김광배</p>
                           <p className="text-red-600 text-sm font-bold">🏆 진정한 장성호 꼴찌 왕</p>
                         </div>
