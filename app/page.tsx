@@ -232,8 +232,8 @@ export default function Home() {
                 { rank: 12, name: "임홍섭", size: "33.5cm", nickname: "괴짜" },
                 { rank: 13, name: "오문호", size: "32cm", nickname: "앗싸리오" },
                 { rank: 14, name: "오태경", size: "30cm", nickname: "바르칸" },
-                { rank: 15, name: "오경석", size: "26.5cm", nickname: "노싱커" },
-                { rank: 16, name: "이석원", size: "26cm", nickname: "까망" }
+                { rank: 15, name: "오경석", size: "26.5cm", nickname: "노싱커" }
+                // { rank: 16, name: "이석원", size: "26cm", nickname: "까망" }
               ].map((player) => (
                 <div key={player.rank} className="p-6 hover:bg-gray-50 transition-colors">
                   <div className="flex items-center justify-between">
@@ -266,6 +266,28 @@ export default function Home() {
 
                 {/* Special Bottom 3 */}
                 <div className="divide-y divide-red-200">
+                  <div className="p-6 hover:bg-red-50 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-6">
+                        <div className="w-12 h-12 bg-red-200 rounded-full flex items-center justify-center border-2 border-red-400">
+                          <div className="relative">
+                            <div className="w-14 h-14 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center border-3 border-gray-700 shadow-lg">
+                              <span className="text-lg font-bold text-white">16</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-medium text-gray-900">까망</h3>
+                          <p className="text-gray-500 text-sm">이석원</p>
+                          <p className="text-red-600 text-sm font-bold">🏆 진정한 장성호 꼴찌 왕</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xl font-semibold text-red-600">26cm</div>
+                        <p className="text-red-400 text-xs">최대 배스</p>
+                      </div>
+                    </div>
+                  </div>
                   {/* 무사 */}
                   <div className="p-6 hover:bg-red-50 transition-colors">
                     <div className="flex items-center justify-between">
@@ -338,7 +360,7 @@ export default function Home() {
             <div className="bg-gray-50 p-6">
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <div className="text-2xl font-bold text-blue-600">16명</div>
+                  <div className="text-2xl font-bold text-blue-600">18명</div>
                   <p className="text-gray-500 text-sm">참가자</p>
                 </div>
                 <div>
