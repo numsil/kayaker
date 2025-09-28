@@ -150,7 +150,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">🏆 장성호 멸망전 순위 🏆</h2>
-            <p className="text-xl text-gray-600">장성호 대회 결과 - 최대 배스 사이즈</p>
+            <p className="text-xl text-gray-600">🎣 장성호 대회 결과 - 최대 배스 사이즈 🎣</p>
           </div>
 
           <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
