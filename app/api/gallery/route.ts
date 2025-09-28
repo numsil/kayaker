@@ -84,7 +84,8 @@ async function writeGalleryData(data: any[]) {
 
     const blob = await put(filename, jsonData, {
       access: 'public',
-      contentType: 'application/json'
+      contentType: 'application/json',
+      addRandomSuffix: true
     });
 
     console.log('Blob written successfully:', blob.url);
