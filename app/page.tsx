@@ -369,7 +369,7 @@ export default function Home() {
                         </div>
                         <div>
                           <h3 className="text-xl font-bold text-gray-700">꽝종</h3>
-                          <p className="text-gray-600 font-medium">권중성</p>
+                          <p className="text-gray-600 font-medium">권종성</p>
                         </div>
                       </div>
                       <div className="text-right">
