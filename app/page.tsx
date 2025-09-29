@@ -155,9 +155,9 @@ export default function Home() {
 
           <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
             {/* 1st Place - Special Design */}
-            <div className="bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 p-8">
+            <div className="bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 p-10">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-8">
                   <div className="relative">
                     {/* Crown Icon */}
                     <svg className="w-16 h-16 text-white drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
@@ -171,21 +171,20 @@ export default function Home() {
                     <h3 className="text-3xl font-bold text-white">입질가즘 | 송인호</h3>
                     <p className="text-yellow-100 text-lg">장성호 챔피언</p>
                   </div>
-                </div>
 
-                {/* Winner Profile Image - Center */}
-                <div className="flex items-center justify-center mx-8">
-                  <div className="relative">
-                    <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-yellow-200 shadow-2xl">
+                  {/* Winner Profile Image - Next to Text */}
+                  <div className="relative ml-6">
+                    <div className="w-36 h-36 rounded-lg overflow-hidden border-4 border-yellow-200 shadow-2xl bg-white p-1">
                       <Image
-                        src="/winner-profile.jpg"
+                        src="/champion.jpeg"
                         alt="장성호 챔피언 송인호"
-                        width={96}
-                        height={96}
-                        className="w-full h-full object-cover"
+                        width={144}
+                        height={144}
+                        className="w-full h-full object-cover rounded-md"
                       />
                     </div>
-                    <div className="absolute -top-2 -right-2 text-2xl animate-pulse">🎣</div>
+                    <div className="absolute -top-3 -right-3 text-3xl animate-pulse">✨</div>
+                    <div className="absolute -bottom-3 -left-3 text-2xl animate-bounce">🏆</div>
                   </div>
                 </div>
 
