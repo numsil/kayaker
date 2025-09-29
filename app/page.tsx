@@ -172,6 +172,23 @@ export default function Home() {
                     <p className="text-yellow-100 text-lg">장성호 챔피언</p>
                   </div>
                 </div>
+
+                {/* Winner Profile Image - Center */}
+                <div className="flex items-center justify-center mx-8">
+                  <div className="relative">
+                    <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-yellow-200 shadow-2xl">
+                      <Image
+                        src="/winner-profile.jpg"
+                        alt="장성호 챔피언 송인호"
+                        width={96}
+                        height={96}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="absolute -top-2 -right-2 text-2xl animate-pulse">🎣</div>
+                  </div>
+                </div>
+
                 <div className="text-right">
                   <div className="text-4xl font-bold text-white">56cm</div>
                   <p className="text-yellow-100">최대 배스</p>
