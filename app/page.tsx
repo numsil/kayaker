@@ -149,32 +149,42 @@ export default function Home() {
       <section className="py-32 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">🏆 장성호 멸망전 순위 🏆</h2>
-            <p className="text-xl text-gray-600">🎣 장성호 대회 결과 - 최대 배스 사이즈 🎣</p>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+              <span className="hidden md:inline">🏆 </span>
+              장성호 멸망전 순위
+              <span className="hidden md:inline"> 🏆</span>
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600">
+              <span className="hidden md:inline">🎣 </span>
+              장성호 대회 결과 - 최대 배스 사이즈
+              <span className="hidden md:inline"> 🎣</span>
+            </p>
           </div>
 
           <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
             {/* 1st Place - Special Design */}
             <div className="bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 p-10">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-8">
-                  <div className="relative">
-                    {/* Crown Icon */}
-                    <svg className="w-16 h-16 text-white drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2L15 8L21 9L16.5 13.5L18 20L12 16L6 20L7.5 13.5L3 9L9 8L12 2Z" />
-                    </svg>
-                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                      <span className="text-yellow-600 font-bold text-sm">1</span>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
+                  <div className="flex items-center gap-4 md:gap-6">
+                    <div className="relative">
+                      {/* Crown Icon */}
+                      <svg className="w-12 h-12 md:w-16 md:h-16 text-white drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L15 8L21 9L16.5 13.5L18 20L12 16L6 20L7.5 13.5L3 9L9 8L12 2Z" />
+                      </svg>
+                      <div className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-white rounded-full flex items-center justify-center">
+                        <span className="text-yellow-600 font-bold text-xs md:text-sm">1</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-xl md:text-3xl font-bold text-white">입질가즘 | 송인호</h3>
+                      <p className="text-yellow-100 text-sm md:text-lg">장성호 챔피언</p>
                     </div>
                   </div>
-                  <div>
-                    <h3 className="text-3xl font-bold text-white">입질가즘 | 송인호</h3>
-                    <p className="text-yellow-100 text-lg">장성호 챔피언</p>
-                  </div>
 
-                  {/* Winner Profile Image - Next to Text */}
-                  <div className="relative ml-6">
-                    <div className="w-36 h-36 rounded-lg overflow-hidden border-4 border-yellow-200 shadow-2xl bg-white p-1">
+                  {/* Winner Profile Image - Below text on mobile, next to text on desktop */}
+                  <div className="relative flex justify-center md:justify-start">
+                    <div className="w-28 h-28 md:w-36 md:h-36 rounded-lg overflow-hidden border-4 border-yellow-200 shadow-2xl bg-white p-1">
                       <Image
                         src="/champion.jpeg"
                         alt="장성호 챔피언 송인호"
@@ -183,14 +193,14 @@ export default function Home() {
                         className="w-full h-full object-cover rounded-md"
                       />
                     </div>
-                    <div className="absolute -top-3 -right-3 text-3xl animate-pulse">✨</div>
-                    <div className="absolute -bottom-3 -left-3 text-2xl animate-bounce">🏆</div>
+                    <div className="absolute -top-2 -right-2 md:-top-3 md:-right-3 text-2xl md:text-3xl animate-pulse">✨</div>
+                    <div className="absolute -bottom-2 -left-2 md:-bottom-3 md:-left-3 text-xl md:text-2xl animate-bounce">🏆</div>
                   </div>
                 </div>
 
-                <div className="text-right">
-                  <div className="text-4xl font-bold text-white">56cm</div>
-                  <p className="text-yellow-100">최대 배스</p>
+                <div className="text-center md:text-right">
+                  <div className="text-3xl md:text-4xl font-bold text-white">56cm</div>
+                  <p className="text-yellow-100 text-sm md:text-base">최대 배스</p>
                 </div>
               </div>
             </div>
