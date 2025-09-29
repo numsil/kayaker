@@ -247,7 +247,7 @@ export default function Home() {
 
               {/* 4th-16th Places */}
               {[
-                { rank: 4, name: "쌔팀장", size: "50cm", nickname: "장이수팀장" },
+                { rank: 4, name: "쎄팀장", size: "50cm", nickname: "장이수팀장" },
                 { rank: 5, name: "염의철", size: "48cm", nickname: "런커" },
                 { rank: 6, name: "강구현", size: "46cm", nickname: "도르도" },
                 { rank: 6, name: "윤명식", size: "46cm", nickname: "다슬기" },
