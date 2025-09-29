@@ -130,7 +130,7 @@ export default function AdminPage() {
         resolve(file);
         return;
       }
-      const img = new Image();
+      const img = document.createElement('img');
 
       img.onload = () => {
         // 비율 유지하면서 크기 조정
